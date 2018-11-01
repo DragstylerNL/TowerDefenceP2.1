@@ -7,9 +7,7 @@ public class GameController : MonoBehaviour {
     public Grid grid;
     
 	void Start () {
-
-        grid = new Grid();
-        grid.Test();
+        
 	}
 	
 	void Update () {
