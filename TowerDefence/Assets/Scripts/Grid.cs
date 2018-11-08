@@ -5,15 +5,16 @@ using UnityEngine;
 public class Grid : MonoBehaviour {
 
     public GameObject prefabTile;
-    public float placementScale = 1.5f;
-    public int sizeX = 12, sizeY = 5;
+    private float placementScaleX = 1.3f;
+    private float placementScaleY = 1.1f;
+    private int sizeX = 13, sizeY = 5;
 
     private GameObject[,] gridObjects;
     private Tile[,] gridTiles;
 
     void Start () {
-        gridObjects = new GameObject[5, 13];
-        gridTiles = new Tile[5, 13];
+        gridObjects = new GameObject[sizeY, sizeX];
+        gridTiles = new Tile[sizeY, sizeX];
 
         for (int i = 0; i < sizeY; i++) { for(int j = 0; j < sizeX; j++)
             {
@@ -23,6 +24,7 @@ public class Grid : MonoBehaviour {
                 gridTiles[i, j].x = j;
                 float posX = GetWorldPos(j, i)[0];
                 float posY = GetWorldPos(j, i)[1];
+                if (i != Mathf.FloorToInt(i / 2)* 2) { posX -= placementScaleX / 2; }
                 gridObjects[i, j].transform.position = new Vector3(posX, posY, 0);
         } }
 	}
@@ -50,8 +52,8 @@ public class Grid : MonoBehaviour {
     public float[] GetWorldPos(int x, int y)
     {
         float[] returnHolder= new float[2];
-        returnHolder[0] = (gridTiles[y, x].x - Mathf.FloorToInt(gridTiles.GetLength(1) / 2))* placementScale;
-        returnHolder[1] = (gridTiles[y, x].y - Mathf.FloorToInt(gridTiles.GetLength(0) / 2))* placementScale;
+        returnHolder[0] = (gridTiles[y, x].x - Mathf.FloorToInt(gridTiles.GetLength(1) / 2))* placementScaleX;
+        returnHolder[1] = (gridTiles[y, x].y - Mathf.FloorToInt(gridTiles.GetLength(0) / 2))* placementScaleY;
         return returnHolder;    
     }
 }
