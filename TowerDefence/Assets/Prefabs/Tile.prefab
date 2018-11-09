@@ -1173,3 +1173,5 @@ MonoBehaviour:
   entity: Empty
   x: 0
   y: 0
+  isSelected: 0
+  marked: {fileID: 1047768434076428, guid: 98d13b76700304d46af3a4b7dd29ae7e, type: 2}

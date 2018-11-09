@@ -12,7 +12,7 @@ public class Grid : MonoBehaviour {
     private GameObject[,] gridObjects;
     private Tile[,] gridTiles;
 
-    void Start () {
+    void Awake () {
         gridObjects = new GameObject[sizeY, sizeX];
         gridTiles = new Tile[sizeY, sizeX];
 
@@ -49,11 +49,21 @@ public class Grid : MonoBehaviour {
         gridTiles[y, x].entity = entity;
     }
 
+    public void SetTileDeSelected(int x, int y)
+    {
+        gridTiles[y, x].DeSelect();
+    }
+
+    public void SetTileSelected(int x, int y) {
+        gridTiles[y, x].Select();
+    }
+
+
     public float[] GetWorldPos(int x, int y)
     {
         float[] returnHolder= new float[2];
         returnHolder[0] = (gridTiles[y, x].x - Mathf.FloorToInt(gridTiles.GetLength(1) / 2))* placementScaleX;
-        returnHolder[1] = (gridTiles[y, x].y - Mathf.FloorToInt(gridTiles.GetLength(0) / 2))* placementScaleY;
+        returnHolder[1] = -((gridTiles[y, x].y - Mathf.FloorToInt(gridTiles.GetLength(0) / 2))* placementScaleY);
         return returnHolder;    
     }
 }
