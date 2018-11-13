@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour {
 
-    private bool up, down, left, right;
+    private bool up, down, left, right, spaceBar;
 
     [SerializeField]
     private GameController gameController;
@@ -14,10 +14,14 @@ public class InputManager : MonoBehaviour {
         down = Input.GetButtonDown("Down");
         left = Input.GetButtonDown("Left");
         right = Input.GetButtonDown("Right");
+        spaceBar = Input.GetButtonDown("Jump");
 
         if (up && gameController.GetSelectedPos()[1] !=0) { gameController.SetSelectedY(-1); }
         if (down && gameController.GetSelectedPos()[1] !=4) { gameController.SetSelectedY(1); }
         if (left && gameController.GetSelectedPos()[0] !=0) { gameController.SetSelectedX(-1); }
         if (right && gameController.GetSelectedPos()[0] !=12) { gameController.SetSelectedX(1); }
+        if (spaceBar) {
+            gameController.RequestTurret(0); 
+        }
     }
 }

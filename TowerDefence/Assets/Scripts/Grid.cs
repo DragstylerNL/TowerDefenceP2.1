@@ -6,7 +6,7 @@ public class Grid : MonoBehaviour {
 
     public GameObject prefabTile;
     private float placementScaleX = 1.3f;
-    private float placementScaleY = 1.1f;
+    private float placementScaleY = 1.3f;
     private int sizeX = 13, sizeY = 5;
 
     private GameObject[,] gridObjects;
@@ -24,7 +24,6 @@ public class Grid : MonoBehaviour {
                 gridTiles[i, j].x = j;
                 float posX = GetWorldPos(j, i)[0];
                 float posY = GetWorldPos(j, i)[1];
-                if (i != Mathf.FloorToInt(i / 2)* 2) { posX -= placementScaleX / 2; }
                 gridObjects[i, j].transform.position = new Vector3(posX, posY, 0);
         } }
 	}
@@ -63,6 +62,7 @@ public class Grid : MonoBehaviour {
     {
         float[] returnHolder= new float[2];
         returnHolder[0] = (gridTiles[y, x].x - Mathf.FloorToInt(gridTiles.GetLength(1) / 2))* placementScaleX;
+        if (y != Mathf.FloorToInt(y / 2) * 2) { returnHolder[0] -= placementScaleX / 2; }
         returnHolder[1] = -((gridTiles[y, x].y - Mathf.FloorToInt(gridTiles.GetLength(0) / 2))* placementScaleY);
         return returnHolder;    
     }
