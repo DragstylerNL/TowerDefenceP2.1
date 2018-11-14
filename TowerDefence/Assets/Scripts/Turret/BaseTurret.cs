@@ -25,4 +25,12 @@ public class BaseTurret : MonoBehaviour {
         GameController gmc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         gmc.GetSelectedPos();
 	}
+
+    void Update()
+    {
+        if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3(1, 0, 0))){
+            
+
+        }
+    }
 }
