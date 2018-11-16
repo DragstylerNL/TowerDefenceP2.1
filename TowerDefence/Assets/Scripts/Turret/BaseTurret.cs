@@ -6,14 +6,19 @@ using UnityEngine.UI;
 public class BaseTurret : MonoBehaviour {
 
     private string TRname;
-    private float TRdamage, TRfirerate;
-    private int TRcost;
+    private float TRdamage, TRfirerate, TRbulletSpeed;
+    private int TRcost = 10;
+    private float TRfireReady;
+    private float scanOfset = 0;
+
+    public GameObject bullet;
 	
-    public void SetInfo(string name, float dmg,float firerate,int cost)
+    public void SetInfo(string name, float dmg,float firerate,float bulletSpeed,int cost)
     {
         TRname = name;
         TRdamage = dmg;
         TRfirerate = firerate;
+        TRbulletSpeed = bulletSpeed;
         TRcost = cost;
     }
 
@@ -28,9 +33,39 @@ public class BaseTurret : MonoBehaviour {
 
     void Update()
     {
-        if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y, transform.position.z), new Vector3(1, 0, 0))){
-            
+        if(TRfireReady > 0) { TRfireReady -= Time.deltaTime; }
+        CastRay();
+    }
 
+    private void CastRay()
+    {
+        RaycastHit hit;
+        GameObject currentHit;
+        if (Physics.Raycast(new Vector3(transform.position.x + 0.5f + scanOfset, transform.position.y, transform.position.z - 0.55f), Vector3.right, out hit))
+        {
+            currentHit = hit.collider.gameObject;
+            if (currentHit.tag == "Turret")
+            {
+                scanOfset += 1.3f;
+            }
+            else if (currentHit.tag == "Enemy")
+            {
+                scanOfset = 0;
+                Shoot();
+            }
+            else { scanOfset = 0; }
+        }
+    }
+
+    private void Shoot()
+    {
+        if(TRfireReady <= 0)
+        {
+            TRfireReady = TRfirerate;
+            GameObject readyBullet = bullet;
+            readyBullet.transform.position = new Vector3(transform.position.x + 0.5f, transform.position.y, transform.position.z - 0.55f);
+            readyBullet.GetComponent<Bullet>().SetStats(TRbulletSpeed, TRdamage);
+            Instantiate(readyBullet);
         }
     }
 }

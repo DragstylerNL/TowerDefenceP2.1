@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
 
     //game Variables
-    private int money = 0, wave = 1;
+    private int money = 20, wave = 1;
     
 
     //turret list
@@ -29,10 +29,16 @@ public class GameController : MonoBehaviour {
         return SelectedPos;
     }
 
+    // setters 
     public void SetSelectedX(int xMov) { DeSelect(); SelectedPos[0] += xMov; Select(); }
     public void SetSelectedY(int yMov) { DeSelect(); SelectedPos[1] += yMov; Select(); }
     public void DeSelect() { grid.SetTileDeSelected(SelectedPos[0],SelectedPos[1]); }
     public void Select() { grid.SetTileSelected(SelectedPos[0],SelectedPos[1]); }
+    public void AddMoney(int change) { money += change; }
+    public void TakeMoney(int change) { money -= change; }
+
+    //getter
+    public int GetMoney() { return money; }
 
     public void RequestTurret(int turretNumber)
     {
@@ -40,8 +46,11 @@ public class GameController : MonoBehaviour {
         {
             int cost = 0;
             switch (turretNumber) {
-                case 0: cost = prefabs[turretNumber].GetComponent<NormyTurret>().GetCost();
-                    if (money >= cost){ PlaceTurret(turretNumber, prefabs[turretNumber].GetComponent<NormyTurret>().GetName()); }
+                case 0:
+                    if (money >= 10){
+                        TakeMoney(10);
+                        PlaceTurret(turretNumber, prefabs[turretNumber].GetComponent<NormyTurret>().GetName());
+                    }
                     break;
             }
             

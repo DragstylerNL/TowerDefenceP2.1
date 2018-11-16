@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NormyTurret : BaseTurret {
+public class NormyEnemy : BaseEnemy
+{
     
-
 	void Awake () {
-        SetInfo("NormyTurret", 7f, 1f, 5f, 10);
+        SetInfo(20, 2, 7);
 	}
-
-
+	
 }
